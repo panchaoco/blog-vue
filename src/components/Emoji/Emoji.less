@@ -1,0 +1,23 @@
+.emoji-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  border: 1px solid #ececec;
+  height: 0;
+  overflow: hidden;
+  transition: all .4s;
+  opacity: 0;
+  &.active {
+    padding-top: 10px;
+    opacity: 1;
+  }
+  .emoji-item {
+    flex: 0 0 40px;
+    cursor: pointer;
+    text-align: center;
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
