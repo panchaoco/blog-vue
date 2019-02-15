@@ -3,33 +3,51 @@
     <div class="music-pic-wrapper">
       <div class="music-info">
         <div class="play-list">
-          <ul>
-            <li v-for="(item, index) in playList" :key="index" :style="{borderBottom: `1px solid ${border}`}">
-              <div class="info">
-                <span>{{item.songname}}</span>
-                <i style="margin: 0 6px">-</i>
-                <p class="single" v-for="(s_item, i) in item.singer" :key="s_item.id">
-                  <span>{{s_item.name}}</span>
-                  <span style="margin: 0 6px">{{i !== item.singer.length - 1 ? '-' : ''}}</span>
-                </p>
-              </div>
-              <div class="play-status" title="播放">
-                <Icon type="md-play"/>
-              </div>
-              <div class="dynamic">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <div class="remove" title="删除">
-                <Icon type="md-trash"/>
-              </div>
+          <ul class="top">
+            <li>
+              <div class="title">歌曲信息</div>
+              <div class="profile">操作</div>
+              <div class="status">状态</div>
+              <div class="del">删除</div>
             </li>
           </ul>
+          <div class="scroll">
+            <swiper :options="swiperOption">
+              <swiper-slide class="text">
+                <ul class="list content">
+                  <li v-for="(item, index) in playList" :key="index" :style="{borderBottom: `1px solid ${border}`}">
+                    <div class="info" :class="{curr: index === currentPlay}">
+                      <span>{{item.songname}}</span>
+                      <i style="margin: 0 6px">-</i>
+                      <p class="single" v-for="(s_item, i) in item.singer" :key="s_item.id">
+                        <span>{{s_item.name}}</span>
+                        <span style="margin: 0 6px">{{i !== item.singer.length - 1 ? '-' : ''}}</span>
+                      </p>
+                    </div>
+                    <div class="play-status" title="播放">
+                      <Icon type="md-pause" ref="playIcon" @click="togglePlayStatus(index, 'paused')" v-if="index === currentPlay && playing && playing !== -1"/>
+                      <Icon type="md-play" ref="playIcon" v-else @click="togglePlayStatus(index, 'running')"/>
+                    </div>
+                    <div class="dynamic" :class="{playing: index === currentPlay}">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <div class="remove" title="删除">
+                      <Icon type="md-trash"/>
+                    </div>
+                  </li>
+                </ul>
+              </swiper-slide>
+              <div class="swiper-scrollbar" slot="scrollbar">
+                <div class="swiper-scrollbar-drag" :style="{backgroundColor: border}"></div>
+              </div>
+            </swiper>
+          </div>
         </div>
         <div class="music">
-          <div class="pic-border" ref="border" :class="{begin: begin, hidden: hide}" @click="togglePlayStatus">
+          <div class="pic-border" ref="border" :class="{begin: begin, hidden: hide}">
             <img :src="pic" alt="">
           </div>
           <div class="lyric-wrapper">
@@ -42,7 +60,11 @@
       </div>
       <div class="programs">
         <span class="begin-time">{{handleMusicTime(beginTime)}}</span>
-        <div class="line"></div>
+        <div class="line" ref="line" @click="setTimePlay">
+          <div class="current-line" ref="currentLine">
+            <span class="point" @mousedown="pointDown"></span>
+          </div>
+        </div>
         <span class="duration">{{handleMusicTime(endTime)}}</span>
         <div class="play-list-icon" @click="onPlayList">
           <Icon type="md-reorder"/>
@@ -50,7 +72,7 @@
 
       </div>
     </div>
-    <audio ref="audio" :src="playUrl[0]" v-if="playUrl.length > 0" preload @canplay="canPlay" @ended="onEnded">
+    <audio ref="audio" :src="playUrl[0]" @canplay="canPlay" @ended="onEnded">
       <source :src="url" v-for="(url, index) in playUrl" :key="index"/>
     </audio>
     <div class="player-img" :style="{backgroundImage: `url(${pic})`}"></div>
@@ -109,42 +131,67 @@
         openList: false,
         bgRgb: null,
         currentLyric: 0,
-        top: 0
+        top: 0,
+        lyricTimer: null,
+        playing: false,
+        swiperOption: {
+          direction: 'vertical',
+          slidesPerView: 'auto',
+          freeMode: false,
+          scrollbar: {
+            el: '.swiper-scrollbar'
+          },
+          mousewheel: true
+        },
+        pointOpt: {
+          isDown: false,
+          startX: 0,
+          endX: 0,
+          oldWidth: 0
+        }
       }
     },
     computed: {
       ...mapState({
         musicOpt: state => state.music.musicOpt,
-        play: state => state.music.play,
       }),
     },
     created() {
       this.rgbStyle()
+      this.init(false)
       window.addEventListener('storage', (e) => {
         if (e.key === 'playList' && e.newValue !== e.oldValue) {
+          clearTimeout(this.lyricTimer)
+          this.lyricTimer = null
           this.top = 0
           this.playList = JSON.parse(e.newValue)
-          this.init()
+          this.currentPlay = 0
+          window.localStorage.setItem('currentPlay', this.currentPlay)
+          this.init(true)
           this.rgbStyle()
         }
       }, false)
     },
     mounted() {
-      this.$nextTick(() => {
-        this.init()
-        this.show = true
-      })
+      window.addEventListener('beforeunload', e => this.beforeUnloadHandler(e))
+      window.localStorage.setItem('isOpen', '1')
     },
     methods: {
       ...mapMutations({
         updateSongUrl: 'music/updateSongUrl',
         updatePlayStatus: 'music/updatePlayStatus',
         updateMusicPic: 'music/updateMusicPic',
-        updateMusicAlbumMid: 'music/updateMusicAlbumMid'
+        updateMusicAlbumMid: 'music/updateMusicAlbumMid',
       }),
+      beforeUnloadHandler (event) {
+        window.localStorage.setItem('isOpen', '0')
+      },
       init() {
+        this.currentLyric = 0
+        this.beginTime = 0
+        this.rgbStyle()
         this.getAlbum()
-        this.getLyric()
+        this.getPlayUrl()
       },
       getAlbum() {
         const g_tk = cookie.getACSRFToken()
@@ -184,7 +231,6 @@
                 }
               })
             }
-            this.getPlayUrl()
           })
         }
       },
@@ -221,60 +267,89 @@
             playUrl.push(`${s}${req.testfile2g}&r=${(Math.random()).toString().replace('0.', '')}`)
           })
           this.playUrl = playUrl
+          this.getLyric()
         })
       },
-      togglePlayStatus() {
-        this.$refs.border.style.animationPlayState = this.play ? 'paused' : 'running'
-        this.updatePlayStatus(!this.play)
+      togglePlayStatus(index, status) {
+        this.$refs.border.style.animationPlayState = status
+        window.localStorage.setItem('currentPlay', index)
+        if (index !== this.currentPlay) {
+          this.currentPlay = index
+          this.init()
+        } else {
+          this.playing = !this.playing
+          if (this.playing) {
+            this.play()
+          } else {
+            this.pause()
+          }
+        }
 
       },
-      getMusicInfo(audio = this.audio) {
-        this.endTime = parseInt(audio.duration)
-      },
       currentPlayTime() {
-        setTimeout(() => {
-          this.beginTime++
+        clearTimeout(this.lyricTimer)
+        this.lyricTimer = null
+        this.lyricTimer = setTimeout(() => {
+          this.beginTime = parseInt(this.audio.currentTime)
           if (this.beginTime <= this.endTime) {
-            for (let i = 0; i < this.lyricArr.length; i++) {
-              if (i < this.lyricArr.length - 1) {
-                const prev = this.lyricArr[i].time.split(':')
-                const next = this.lyricArr[i + 1].time.split(':')
-                if (this.beginTime >= parseInt(prev[0] * 60) + parseInt(prev[1]) &&
-                  this.beginTime <= parseInt(next[0] * 60) + parseInt(next[1])
-                ) {
-                  this.currentLyric = i
-                }
-              }
-            }
+            this.scrollLyric()
             this.currentPlayTime()
+            this.computedPrograms()
           }
         }, 1000)
       },
-      playMusic() {
-        this.audio = this.$refs.audio
-        this.audio.play()
+      scrollLyric() {
+        if (this.lyricArr.length > 0) {
+          for (let i = 0; i < this.lyricArr.length; i++) {
+            if (i < this.lyricArr.length - 1) {
+              const prev = this.lyricArr[i].time.split(':')
+              const next = this.lyricArr[i + 1].time.split(':')
+              if (this.beginTime >= parseInt(prev[0] * 60) + parseInt(prev[1]) &&
+                this.beginTime <= parseInt(next[0] * 60) + parseInt(next[1])
+              ) {
+                this.currentLyric = i
+              }
+            }
+          }
+        }
+      },
+      play() {
+        try {
+          this.audio.play()
+          this.playing = true
+          this.endTime = parseInt(this.audio.duration)
+          this.currentPlayTime()
+        } catch (e) {
+        }
+      },
+      pause() {
+        this.audio.pause()
+        this.playing = false
+        clearTimeout(this.lyricTimer)
+        this.lyricTimer = null
       },
       rgbStyle() {
         let r = Math.ceil(Math.random() * 255)
         let g = Math.ceil(Math.random() * 255)
         let b = Math.ceil(Math.random() * 255)
         r = r < 100 ? 100 : r
-        g = g < 120 ? 120 : g
-        b = b < 150 ? 150 : b
+        g = g < 120 ? 140 : g
+        b = b < 150 ? 166 : b
         this.border = `rgba(${r + 20}, ${g}, ${b + 30}, 0.2)`
         this.bgRgb = {
           background: `linear-gradient(to right, rgba(${r + 20}, ${g}, ${b + 40}, 1), rgba(${r + 10}, ${g - 40}, ${b + 30}, 1), rgba(${r + 30}, ${g}, ${b + 50}, 1))`
         }
       },
       onEnded() {
-
+        if (this.currentPlay < this.playList.length - 1) {
+          this.currentPlay += 1
+          window.localStorage.setItem('currentPlay', this.currentPlay)
+          this.init()
+        }
       },
-      canPlay() {
-        this.$nextTick(() => {
-          this.playMusic()
-          this.getMusicInfo()
-          this.currentPlayTime()
-        })
+      canPlay(e) {
+        this.audio = e.target
+        this.play()
       },
       onPlayList() {
         this.openList = !this.openList
@@ -283,12 +358,63 @@
         const m = Math.floor(time / 60)
         const s = time - m * 60 < 10 ? `0${time - m * 60}` : time - m * 60
         return `0${m}:${s}`
+      },
+      computedPrograms() {
+        if (this.$refs.line) {
+          const lineWidth = this.$refs.line.getBoundingClientRect().width
+          const currentTime = this.audio.currentTime
+          const duration = this.audio.duration
+          const width = currentTime * lineWidth / duration
+          this.$refs.currentLine.style.width = `${width}px`
+        }
+
+      },
+      pointDown(e) {
+        this.pointOpt.isDown = true
+        this.pointOpt.startX = e.clientX
+        this.pointOpt.oldWidth = parseInt(window.getComputedStyle(this.$refs.currentLine , null).getPropertyValue('width'))
+        document.body.addEventListener('mousemove', this.pointMove, false)
+        document.body.addEventListener('mouseup', (e) => {
+          document.body.removeEventListener('mousemove', this.pointMove, false)
+          this.pointUp(e)
+        })
+      },
+      pointMove(e) {
+        if (this.pointOpt.isDown) {
+          this.pointOpt.endX = e.clientX
+          const w = this.pointOpt.endX - this.pointOpt.startX
+          const currW = this.pointOpt.oldWidth + w
+          this.$refs.currentLine.style.width = `${currW}px`
+          this.pause()
+        }
+      },
+      pointUp(e) {
+        this.pointOpt.isDown = false
+        this.pointOpt.endX = e.clientX
+        const currW = parseInt(window.getComputedStyle(this.$refs.currentLine , null).getPropertyValue('width'))
+        this.audio.currentTime = currW * this.audio.duration / parseInt(window.getComputedStyle(this.$refs.line , null).getPropertyValue('width'))
+        this.play()
+        clearTimeout(this.lyricTimer)
+        this.lyricTimer = null
+        console.log('pointUp', e)
+      },
+      setTimePlay(e) {
+        const w = e.offsetX
+        this.$refs.currentLine.style.width = `${w}px`
+        this.audio.currentTime = w * this.audio.duration / parseInt(window.getComputedStyle(this.$refs.line , null).getPropertyValue('width'))
       }
+    },
+    destroyed() {
+      window.removeEventListener('beforeunload', e => this.beforeUnloadHandler(e))
     },
     watch: {
       currentLyric(val, old) {
-        if (val !== old && val >= 6 && this.lyricArr.length - 6 >= val) {
-          this.top = -(30 * (val - 6))
+        if (val !== old && val >= 7 && this.lyricArr.length - 8 >= val) {
+          this.top = -(30 * (val - 7))
+        }
+        const end = this.lyricArr[this.lyricArr.length - 1].time.split(':')
+        if (this.beginTime >= parseInt(end[0] * 60) + parseInt(end[1]) && val < this.lyricArr.length - 2) {
+          this.currentLyric = this.lyricArr.length - 1
         }
       }
     }

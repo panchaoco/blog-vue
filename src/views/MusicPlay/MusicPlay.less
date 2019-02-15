@@ -19,6 +19,7 @@
       position: relative;
       .music {
         flex: 0 0 480px;
+        margin: 0 50px;
       }
       .play-list {
         flex: 1;
@@ -27,41 +28,83 @@
         color: #fff;
         margin-top: 80px;
         margin-left: 80px;
+        .top {
+          position: relative;
+          z-index: 13;
+        }
+        .scroll {
+          height: calc(100% - 50px);
+          /deep/.swiper-container {
+            height: 100%;
+            .swiper-slide {
+              height: auto;
+            }
+          }
+          /deep/.swiper-scrollbar {
+            background-color: rgba(120, 140, 196, 0.1);
+          }
+        }
+        .list {
+        }
         ul > li {
           display: flex;
           height: 50px;
           line-height: 50px;
-          border-bottom: 1px solid #E6E6FA;
           .info {
-            width: 300px;
+            width: 34%;
             padding-left: 20px;
             display: flex;
             font-size: 12px;
+            &.curr {
+              color: #45f5fc;
+            }
             p {
             }
           }
+          .title {
+            width: 34%;
+            padding-left: 20px;
+            font-size: 14px;
+          }
+          .profile, .status, .del {
+            width: 22%;
+            text-align: center;
+            font-size: 14px;
+          }
+          .del {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50px;
+          }
         }
         .play-status, .remove {
+          width: 22%;
           display: flex;
           align-items: center;
-          margin-left: 50px;
           font-size: 16px;
           cursor: pointer;
+          justify-content: center;
           &.remove {
             margin-left: auto;
-            padding-right: 30px;
-            padding-left: 100px;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50px;
+          }
+          &.play-status {
+            /deep/.ivu-icon {
+              margin-left: 35px;
+            }
           }
         }
         .dynamic {
           display: flex;
-          width: 60px;
-          flex: 0 0 60px;
+          width: 22%;
+          flex: 0 0 22%;
           justify-content: center;
           align-items: flex-end;
           position: relative;
           top: -18px;
-          margin-left: 50px;
+          left: 30px;
           span {
             display: block;
             width: 2px;
@@ -69,43 +112,56 @@
             background-color: #f7f7f7;
             margin-right: 2.5px;
             &:nth-child(1) {
-              height: 5px;
-              animation: play1 1s linear infinite;
+              height: 8px;
             }
             &:nth-child(2) {
-              height: 16px;
-              animation: play2 1s linear infinite;
+              height: 14px;
             }
             &:nth-child(3) {
               height: 12px;
-              animation: play3 1s linear infinite;
             }
             &:nth-child(4) {
               height: 9px;
-              animation: play4 1s linear infinite;
+            }
+          }
+          &.playing {
+            span {
+              &:nth-child(1) {
+                animation: play1 1s linear infinite;
+              }
+              &:nth-child(2) {
+                animation: play2 1s linear infinite;
+              }
+              &:nth-child(3) {
+                animation: play3 1s linear infinite;
+              }
+              &:nth-child(4) {
+                animation: play4 1s linear infinite;
+              }
             }
           }
         }
       }
       .lyric-wrapper {
         overflow: hidden;
+        margin-top: 20px;
       }
       .lyric {
-        min-width: 300px;
-        margin-top: 40px;
+        width: 480px;
         transition: all .4s ease-out;
         &.hide {
           opacity: 0;
         }
         p {
-          min-width: 300px;
-          height: 30px;
-          line-height: 28px;
+          width: 480px;
+          min-height: 30px;
+          line-height: 25px;
           font-size: 13px;
           text-align: center;
           color: #fff;
+          transition: color .2s;
           &.active {
-            color: #009900;
+            color: #45f5fc;
           }
         }
       }
@@ -145,14 +201,33 @@
       margin-left: 80px;
       margin-bottom: 60px;
       margin-right: 80px;
+      overflow: hidden;
       .line {
         width: 100%;
         height: 4px;
-        background-color: #fff;
+        background-color: #5f7286;
         border-radius: 6px;
         margin: 0 10px;
         position: relative;
         top: -1px;
+        .current-line {
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 4px;
+          width: 0;
+          background-color: #fff;
+          border-radius: 6px;
+          .point {
+            position: absolute;
+            right: 0;
+            top: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: #ffffff;
+            border-radius: 50%;
+          }
+        }
       }
       .play-list-icon {
         font-size: 20px;
@@ -192,24 +267,24 @@
 
 @keyframes play1 {
   0% {
-    height: 5px;
+    height: 8px;
   }
   50% {
     height: 16px;
   }
   100% {
-    height: 5px;
+    height: 8px;
   }
 }
 @keyframes play2 {
   0% {
-    height: 16px;
+    height: 14px;
   }
   50% {
     height: 10px;
   }
   100% {
-    height: 16px;
+    height: 14px;
   }
 }
 @keyframes play3 {

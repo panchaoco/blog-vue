@@ -109,18 +109,26 @@
       ...mapState({
         current: state => state.music.musicOpt.current,
         play: state => state.music.play,
-        songList: state => state.music.songList
+        songList: state => state.music.songList,
       })
     },
     mounted() {
       this.getMusicList()
+      window.addEventListener('storage', (e) => {
+        console.log('eee', e)
+        if (e.key === 'isOpen') {
+          const isOpen = e.newValue === '1'
+          this.isOpen = isOpen
+          console.log('8', isOpen, this.isOpen)
+        }
+      }, false)
     },
     methods: {
       ...mapMutations({
         updateSongUrl: 'music/updateSongUrl',
         updatePlayStatus: 'music/updatePlayStatus',
         updateMusicPic: 'music/updateMusicPic',
-        updateMusicAlbumMid: 'music/updateMusicAlbumMid'
+        updateMusicAlbumMid: 'music/updateMusicAlbumMid',
       }),
       getMusicList() {
         this.$store.dispatch('music/getMusicComment', {
@@ -155,13 +163,11 @@
           json = [item.data].concat(json)
         }
         window.localStorage.setItem('playList', JSON.stringify(json))
-        // this.$router.push({
-        //   path: '/player/' + item.data.albummid,
-        // })
-        if (!this.isOpen) {
-          window.open('/player/' + item.data.albummid)
+        if (window.localStorage.getItem('isOpen') !== '1') {
+          this.isOpen = true
+          window.localStorage.setItem('isOpen', '1')
+          window.open('/player/' + item.data.songmid)
         }
-        this.isOpen = true
       },
     },
     components: {

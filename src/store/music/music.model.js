@@ -11,7 +11,6 @@ export default {
       album_mid: '',
       current: -1,
     },
-    audio: null
   },
   mutations: {
     ['music/updateSongUrl'](state, {url, index}) {
@@ -31,9 +30,6 @@ export default {
     ['music/updateMusicAlbumMid'](state, mid) {
       state.musicOpt.album_mid = mid
     },
-    ['music/updateAudio'](state, audio) {
-      state.audio = audio
-    }
   },
   actions: {
     async ['music/getMusicComment']({commit}, payload) {
