@@ -1,0 +1,76 @@
+@import "../../assets/style/article/article";
+.article-container {
+  .article-content {
+    width: 1090px;
+    margin: 0 auto;
+    display: flex;
+    .render-text {
+      width: calc(100% - 250px);
+      opacity: 0;
+      transition: opacity .3s;
+      transition-delay: .2s;
+      margin-right: 10px;
+      &.show {
+        opacity: 1;
+      }
+
+      .loading-icon {
+        text-align: center;
+        /deep/.ivu-spin-dot {
+          margin: 0 auto;
+        }
+      }
+      .comment {
+        margin-top: 30px;
+        width: 100%;
+      }
+      .love {
+        padding: 10px 0;
+        font-size: 14px;
+        display: flex;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        .love-btn {
+          display: flex;
+        }
+        .thumbs-icon {
+          position: relative;
+          top: 1px;
+        }
+        .up-text {
+          margin: 0 5px;
+        }
+        span {
+          margin-left: 5px;
+        }
+        .up-count {
+          color: #0b7eff;
+        }
+        .is-thumbs {
+          position: absolute;
+          left: 5px;
+          top: -50px;
+          color: #0b7eff;
+          display: flex;
+          background-color: #fff;
+          padding: 5px 20px;
+          box-shadow: 0 0 10px #ccc;
+          border-radius: 4px;
+          &.fade-enter-active {
+            transition: all .4s linear;
+          }
+          &.fade-enter {
+            transform: translateY(30px);
+            opacity: 1;
+          }
+        }
+      }
+    }
+    .aside {
+      flex: 0 0 270px;
+      min-height: 600px;
+      //padding: 0px 10px 20px;
+    }
+  }
+}
