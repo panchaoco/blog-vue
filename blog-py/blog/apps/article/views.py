@@ -18,56 +18,63 @@ from common_data import common_view
 from utils.permissions import IsOwnerOrReadOnly
 
 from common_data.serializer_data import success, error
+
 # Create your views here.
 User = get_user_model()
 
 
 class BlogArticlePagination(PageNumberPagination):
-    page_size_query_param = 'page_size'
-    page_query_param = 'page'
+  page_size_query_param = 'page_size'
+  page_query_param = 'page'
 
-    def get_paginated_response(self, data):
-        new_data = {
-            "page": {
-                "total": self.page.paginator.count,
-                "page_size": self.get_page_size(self.request),
-                "page": int(self.request.query_params.get(self.page_query_param, 1))
-            },
-        }
-        dict_data = dict(data)
-        dict_data.update(new_data)
-        return Response(dict_data)
+  def get_paginated_response(self, data):
+    new_data = {
+      "page": {
+        "total": self.page.paginator.count,
+        "page_size": self.get_page_size(self.request),
+        "page": int(self.request.query_params.get(self.page_query_param, 1))
+      },
+    }
+    dict_data = dict(data)
+    dict_data.update(new_data)
+    return Response(dict_data)
 
 
 class BlogArticleViewSet(common_view.ModelViewSet):
-    """
-    添加文章
-    """
-    queryset = BlogArticle.objects.all()
-    serializer_class = BlogArticleSerializers
-    pagination_class = BlogArticlePagination
-    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
-    filter_class = ArticleFilter
-    search_fields = ('title',)
-    ordering_fields = ('update_time', 'add_time')
+  """
+  添加文章
+  """
+  queryset = BlogArticle.objects.all()
+  serializer_class = BlogArticleSerializers
+  pagination_class = BlogArticlePagination
+  filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+  filter_class = ArticleFilter
+  search_fields = ('title',)
+  ordering_fields = ('update_time', 'add_time')
 
 
 class CategoryViewSet(common_view.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    filter_backends = (DjangoFilterBackend, )
-    filter_class = CategoryFilter
+  queryset = Category.objects.all()
+  serializer_class = CategorySerializer
+  filter_backends = (DjangoFilterBackend,)
+  filter_class = CategoryFilter
 
 
 class BlogDomain(common_view.ModelViewSet):
 
-    def list(self, request, *args, **kwargs):
-        code_len = len(BlogArticle.objects.filter(article_type=1))
-        essay_len = len(BlogArticle.objects.filter(article_type=2))
-        category_len = len(Category.objects.all())
+  def list(self, request, *args, **kwargs):
+    code_len = len(BlogArticle.objects.filter(article_type=1))
+    essay_len = len(BlogArticle.objects.filter(article_type=2))
+    category_len = len(Category.objects.all())
 
-        return Response(success(data={
-            "code_len": code_len,
-            "essay_len": essay_len,
-            "category_len": category_len
-        }))
+    return Response(success(data={
+      "code_len": code_len,
+      "essay_len": essay_len,
+      "category_len": category_len
+    }))
+
+
+def getArticleData(request):
+  articles = BlogArticle.objects.all()
+  return render(request, 'index.html', {'articles': articles})
+

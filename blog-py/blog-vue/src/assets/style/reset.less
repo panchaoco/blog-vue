@@ -1,0 +1,133 @@
+body,
+div,
+header,
+footer,
+section,
+aside,
+article,
+ul,
+dl,
+dt,
+dd,
+li,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+i,
+b,
+em,
+textarea,
+button,
+input,
+select {
+  padding: 0;
+  margin: 0;
+  font-style: normal;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  &:focus {
+    outline: none;
+  }
+}
+
+h1 {
+  font-size: 18px;
+}
+
+h2 {
+  font-size: 17px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+html {
+  //width: 100%;
+  //height:100%;
+  //overflow-y: hidden;
+}
+
+body {
+  background-color: #f7f7f7;
+  height: 100%;
+  padding-right: 0 !important;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* 当手指从触摸屏上移开，会保持一段时间的滚动 */
+}
+
+ol {
+  padding-left: 15px;
+}
+
+ul {
+  list-style: none;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+pre, code, xmp, plaintext, listing {
+  //font-family: 'Microsoft YaHei';
+  font-size: 14px;
+}
+
+a {
+  color: #2c3e50;
+}
+
+.markdown-body .highlight pre, .markdown-body pre {
+
+}
+
+.markdown-body h1, .markdown-body h2 {
+  font-weight: normal;
+}
+
+.pc {
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  &::-webkit-scrollbar-button {
+    background-color: rgba(0, 0, 0, 0);
+    display: none;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #efefef;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+}

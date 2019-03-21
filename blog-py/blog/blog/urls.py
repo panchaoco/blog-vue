@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # from django.contrib import admin
+from django.views.generic import TemplateView
 from blog.settings import MEDIA_ROOT
 from django.conf.urls import url, include
 from rest_framework.routers import DefaultRouter
@@ -41,7 +42,9 @@ router.register(r'v1/api/banner', BannerView, base_name="轮播图")
 router.register(r'v1/api/blog_info', BlogDomain, base_name="文章的汇总信息")
 router.register(r'v1/api/music_date', MusicView, base_name="请求qq音乐的时间")
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    url(r'', TemplateView.as_view(template_name="index.html"), name='index'),
+
+
     url('^', include(router.urls)),
     url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
     url(r'^v1/api/login/', obtain_jwt_token),

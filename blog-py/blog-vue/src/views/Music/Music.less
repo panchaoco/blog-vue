@@ -1,0 +1,187 @@
+.music-container {
+  /deep/.main-wrapper .middle-container {
+    background-color: #f9f9f9;
+    box-shadow: 0 0 20px #ececec;
+  }
+  .music-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 10px 0;
+    .music-slider {
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+    .content {
+      margin-top: .15rem;
+      .song-list {
+        li {
+          margin-bottom: .1rem;
+          transition: all .2s;
+          background-color: #ececec;
+          cursor: pointer;
+          height: 0;
+          overflow: hidden;
+          opacity: 0;
+          animation: changeHeight ease-in-out .5s forwards;
+          .song-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            dl {
+              display: flex;
+              align-items: center;
+              dt {
+                flex: 0 0 auto;
+                border: 3px solid #fff;
+                border-radius: 2px;
+                overflow: hidden;
+                position: relative;
+                img {
+                  display: block;
+                  width: 50px;
+                  height: 50px;
+                  cursor: pointer;
+                }
+                .mask {
+                  position: absolute;
+                  left: 0;
+                  right: 0;
+                  top: 0;
+                  bottom: 0;
+                  background-color: rgba(0, 0, 0, .7);
+                  color: #fff;
+                  font-size: 14px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  visibility: hidden;
+                  /deep/.ivu-icon {
+                    border: 1px solid #fff;
+                    width: 25px;
+                    height: 25px;
+                    padding: 0;
+                    text-align: center;
+                    text-indent: 2px;
+                    line-height: 25px;
+                    border-radius: 50%;
+                  }
+                }
+              }
+              dd {
+                padding-left: 15px;
+                h6 {
+                  font-weight: normal;
+                  .time {
+                    margin-left: 20px;
+                  }
+                }
+                p {
+                  padding-top: 5px;
+                }
+              }
+            }
+            > .play-status {
+              display: flex;
+              width: 60px;
+              flex: 0 0 60px;
+              justify-content: center;
+              align-items: flex-end;
+              position: relative;
+              top: -10px;
+              span {
+                display: block;
+                width: 2px;
+                height: 20px;
+                background-color: #fc1d15;
+                margin-right: 2.5px;
+                &:nth-child(1) {
+                  height: 10px;
+                  animation: play1 1s linear infinite;
+                }
+                &:nth-child(2) {
+                  height: 20px;
+                  animation: play2 1s linear infinite;
+                }
+                &:nth-child(3) {
+                  height: 15px;
+                  animation: play3 1s linear infinite;
+                }
+                &:nth-child(4) {
+                  height: 18px;
+                  animation: play4 1s linear infinite;
+                }
+                &:nth-child(5) {
+                  height: 12px;
+                  animation: play5 1s linear infinite;
+                }
+              }
+            }
+          }
+          &:hover {
+            dl dt {
+              .mask {
+                visibility: visible;
+                /deep/.ivu-icon {
+                  animation: mask .5s linear;
+                }
+              }
+            }
+          }
+
+        }
+      }
+      .more-music {
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        span {
+          padding: 10px 20px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+#app-mobile {
+  .music-wrapper {
+    padding: 0;
+    .content {
+      margin-top: .1rem;
+    }
+  }
+  .music-slider img {
+  }
+  .song-wrapper {
+    h6 {
+      font-size: .28rem;
+    }
+    p {
+      font-size: .26rem;
+    }
+  }
+}
+
+@keyframes mask {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 1;
+  }
+}
+
+@keyframes changeHeight {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    padding: 6px 4px;
+    height: 68px;
+    opacity: 1;
+  }
+}

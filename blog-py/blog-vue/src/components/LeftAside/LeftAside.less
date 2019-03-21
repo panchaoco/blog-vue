@@ -1,0 +1,108 @@
+.left-aside {
+  ul {
+    //background-color: #fff;
+
+    li {
+      height: 0.45rem;
+      line-height: 0.45rem;
+      font-size: 0.13rem;
+      padding-left: 15px;
+      transition: all .2s;
+      cursor: pointer;
+      position: relative;
+      //overflow: hidden;
+      span {
+        margin-left: 5px;
+      }
+      &.active {
+        background-color: #fff;
+        padding-left: 0.12rem;
+        color: #0b7eff;
+      }
+      &:hover {
+        background-color: #fff;
+        color: #0b7eff;
+      }
+      .line {
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: .02rem;
+        width: 100%;
+        background-color: #0b7eff;
+        &.line-enter-active, &.line-leave-active {
+          transition: all .3s;
+        }
+        &.line-enter, &.line-leave-to {
+          transform: translateX(-0.2rem);
+          opacity: 0;
+        }
+      }
+    }
+  }
+  .blog-user {
+    box-shadow: 0 0 6px rgba(95, 114, 134, 0.49);
+    margin-top: 0.3rem;
+    padding: 0.15rem 0 0.1rem;
+    //background-color: #fff;
+    transition: all .2s;
+    .user-img {
+      display: block;
+      margin: 0 auto;
+    }
+    .info {
+      padding: 0.1rem 0;
+      font-size: 0.12rem;
+      text-align: center;
+      .username {
+        font-weight: 600;
+      }
+    }
+    .cate {
+      display: flex;
+      justify-content: center;
+      .item {
+        padding: 0 0.08rem;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        position: relative;
+        .count {
+          font-weight: 600;
+        }
+        &:before {
+          content: ' ';
+          position: absolute;
+          right: 0;
+          top: 0.09rem;
+          height: 0.17rem;
+          width: 1px;
+          border-right: 1px solid #d2d2d2;
+        }
+        &:last-child {
+          &:before {
+            display: none;
+          }
+        }
+      }
+    }
+    .links {
+      display: flex;
+      justify-content: center;
+      a {
+        padding: 0.05rem;
+      }
+    }
+  }
+}
+@keyframes userImg {
+  0% {
+    transform: scale3d(.5, .5, .5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
+}

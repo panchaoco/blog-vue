@@ -1,0 +1,118 @@
+
+.hot-container {
+  width: 100%;
+  .hot-content {
+    width: 100%;
+    ul {
+      li {
+        background-color: #ffffff;
+        margin-bottom: 0.1rem;
+        padding: 0.08rem;
+        transition: all .3s ease-in-out;
+        cursor: pointer;
+        &:hover {
+          background-color: #eaeaea;
+        }
+        .hot-item {
+          display: flex;
+          width: 100%;
+          img {
+            width: 0px;
+            margin-right: 0.1rem;
+            flex: 0 0 1.6rem;
+            height: 1.18rem;
+          }
+          .content {
+            padding-top: 0.03rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .top {
+              > a {
+                h1 {
+                  font-size: 0.15rem;
+                  font-weight: 600;
+                  padding-bottom: 0.05rem;
+                  color: #555;
+                  transition: all .3s linear;
+                  &:hover {
+                    text-decoration: underline;
+                    padding-left: 0.1rem;
+                  }
+                }
+              }
+              > p {
+                font-size: 0.125rem;
+                line-height: 0.2rem;
+                padding-right: 0.2rem;
+                color: #555;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                overflow: hidden;
+                -webkit-line-clamp: 3;
+              }
+            }
+            .profile {
+              font-size: 0.12rem;
+              display: flex;
+              //justify-content: space-between;
+              .item {
+                margin-right: 0.5rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                .iconfont {
+                  position: relative;
+                  top: 1px;
+                }
+                span {
+                  margin: 0 0.03rem;
+                }
+                &.up {
+                  .iconfont {
+                    color: #2d8cf0;
+                  }
+                }
+                &.time {
+                  margin-right: 0.1rem;
+                }
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
+
+#app-mobile {
+  .hot-content li {
+    margin-bottom: 0.2rem;
+  }
+  .top {
+    h1 {
+      font-size: .28rem;
+      padding-bottom: 0;
+    }
+    p {
+      padding: .16rem 0;
+      font-size: .25rem;
+      line-height: .4rem;
+    }
+  }
+  .hot-item {
+    padding: .1rem 0 .06rem .1rem;
+    img {
+      display: none;
+    }
+  }
+  .ivu-icon {
+    font-size: 14px !important;
+  }
+  .profile {
+    font-size: .25rem;
+    padding-top: .04rem;
+    padding-left: .04rem;
+  }
+}

@@ -1,0 +1,67 @@
+.wrapper-section {
+  min-height: calc(100vh - 250px);
+}
+
+.app-wrapper {
+  flex: 1;
+  margin-left: 200px;
+}
+@media screen and (max-width: 1089px) {
+  .app-wrapper {
+    margin-left: 0;
+  }
+}
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  .content-wrapper {
+    flex: 1;
+    display: flex;
+  }
+  .main-content {
+    flex: 1;
+    display: flex;
+
+    overflow: hidden;
+  }
+  .middle-container {
+    width: 0;
+    flex: 1;
+    &.animate {
+      animation: main .5s ease-in-out forwards;
+    }
+  }
+}
+
+@keyframes main {
+  0% {
+    transform: translate3d(-300px, 0, 0) scale3d(.4, 1, .4);
+    opacity: 0;
+    filter: blur(6px);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+@keyframes hide {
+  0% {
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+    transform-origin: left;
+    opacity: 1;
+    filter: blur(6px);
+  }
+  100% {
+    transform-origin: left;
+    transform: translate3d(0, 0, 0) scale3d(0.8, 1, 0.8);
+    opacity: 0;
+    filter: blur(0px);
+  }
+}
+
+#app-mobile {
+  .app-wrapper {
+    margin: 0 0.18rem;
+  }
+}

@@ -74,7 +74,7 @@ ROOT_URLCONF = 'blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [os.path.join(BASE_DIR, 'blog-vue/dist')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -99,7 +99,7 @@ DATABASES = {
         'NAME': 'blog',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'HOST': '47.107.167.224',
         'PORT': 3306,
         'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'}
     }
@@ -145,6 +145,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = "/media/"
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "blog-vue/dist/static"),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

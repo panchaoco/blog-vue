@@ -55,8 +55,8 @@ class GetMusicList:
         url = "https://u.y.qq.com/cgi-bin/musicu.fcg"
         gets = request.GET
         headers = {
-            "origin": "https://y.qq.com",
-            "referer": "https://y.qq.com/portal/player.html",
+            "Origin": "https://y.qq.com",
+            "Referer": "https://y.qq.com/portal/player.html",
             # "authority": "u.y.qq.com",
             # "method": "GET",
             # "scheme": "https"
