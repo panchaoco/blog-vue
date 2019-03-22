@@ -1,0 +1,86 @@
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  font-weight: normal;
+}
+/deep/.markdown-body h1, /deep/.markdown-body h2, /deep/.markdown-body h3 {
+  font-weight: normal;
+}
+.end-line {
+  margin: 40px .15rem;
+  height: 2px;
+  border-bottom: 1px solid #eaeaea;
+}
+.render {
+  background-color: #ffffff;
+  padding: .1rem .15rem .1rem;
+  .art-title {
+    font-size: .24rem;
+    line-height: .5rem;
+    font-weight: normal;
+    padding-bottom: .1rem;
+    border-bottom: 1px solid #e8e8e8;
+    text-align: center;
+    font-family: "Microsoft YaHei", 'Myriad Pro','Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+  .article-img {
+    margin: .1rem auto;
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+  /deep/ul li {
+    list-style: disc;
+  }
+  .category {
+    padding-bottom: .06rem;
+    padding-left: .05rem;
+    margin-top: .2rem;
+    border-bottom: 1px solid #ececec;
+    margin-bottom: .05rem;
+    display: flex;
+    justify-content: space-between;
+    .other {
+      display: flex;
+      .cate {
+        margin-right: .3rem;
+        span {
+          margin-left: 1px;
+        }
+      }
+    }
+  }
+  /deep/p {
+    margin: 10px 0;
+    line-height: 28px;
+    font-size: 14px;
+    &.text-indent {
+      text-indent: 30px;
+      font-size: 13px;
+    }
+    img {
+      display: block;
+    }
+  }
+  /deep/pre {
+    //background-color: #282c34;
+    overflow-x: auto;
+    padding: 0;
+    &.padding {
+      padding: 10px;
+      code {
+        font-size: 13px;
+      }
+    }
+  }
+  /deep/code {
+    line-height: 20px;
+    font-size: 13px;
+    font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+    white-space: pre-wrap;
+  }
+  /deep/ol {
+    li {
+      font-size: 14px;
+    }
+  }
+}

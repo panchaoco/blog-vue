@@ -1,0 +1,146 @@
+.animateFun(@name) {
+  transform: translateY(-30px);
+  opacity: 0;
+  animation-name: @name;
+  animation-duration: .4s;
+  animation-delay: .3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+}
+.record-container {
+  margin-left: 200px;
+  min-height: 100%;
+}
+.record-content {
+  padding-top: 20px;
+  min-height: calc(100vh - 1.8rem);
+  background-color: #fff;
+  padding-left: 15px;
+  .record-item {
+    border-left: 3px solid #eaeaea;
+    font-size: 13px;
+    padding-bottom: 45px;
+    &:last-child {
+      padding-bottom: 0;
+    }
+    .year {
+      display: flex;
+      align-items: center;
+      position: relative;
+      .line {
+        width: 15px;
+        flex: 0 0 15px;
+        height: 3px;
+        background-color: #eaeaea;
+        margin-right: 10px;
+        position: relative;
+        margin-top: -15px;
+        .point {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background-color: rgba(44, 62, 80, 0.4);
+          border-radius: 50%;
+          left: -7.5px;
+          top: -4px;
+        }
+      }
+      .year-data {
+        margin-top: -15px;
+        .animateFun(year)
+      }
+    }
+    .sub-time-wrapper {
+      /*overflow: hidden;*/
+    }
+    li {
+      height: 80px;
+    }
+    .sub-item {
+      height: 80px;
+      position: relative;
+      border-bottom: 1px dotted #eaeaea;
+      display: flex;
+      align-items: center;
+      transition: all .2s;
+      .curr-time {
+        margin-right: 5px;
+        transition: margin-left .2s;
+        display: flex;
+        align-items: center;
+      }
+      a {
+        display: block;
+        flex: 1;
+      }
+      .title {
+        margin-bottom: 5px;
+      }
+      .desc {
+        font-size: 12px;
+
+      }
+      .line {
+        width: 30px;
+        flex: 0 0 30px;
+        height: 2px;
+        background-color: #eaeaea;
+        margin-right: 8px;
+        position: relative;
+        .animateFun(move);
+        .point {
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          background-color: rgba(44, 62, 80, 0.4);
+          border-radius: 50%;
+          left: -6px;
+          top: -3px;
+          transition: all .2s;
+        }
+      }
+      .content {
+        display: flex;
+        .animateFun(move);
+      }
+      &:hover {
+        border-color: rgba(44, 62, 80, 0.59);
+        .curr-time {
+          margin-left: 5px;
+        }
+        .point {
+          background-color: rgba(44, 62, 80, 0.69);
+        }
+      }
+    }
+  }
+}
+
+#app-mobile {
+  .record-container {
+    margin-left: 0;
+  }
+  .record-content {
+    padding: .4rem .2rem 0;
+  }
+}
+@keyframes move {
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes year {
+  0% {
+    transform: translateX(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
