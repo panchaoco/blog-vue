@@ -4,7 +4,7 @@ export default {
   state: {
     router: '',
     leftClick: false,
-    isApp: document.documentElement.clientWidth <= 768
+    isApp: document.documentElement.clientWidth <= 1090
   },
   mutations: {
     ['common/updateRouter'](state, router) {

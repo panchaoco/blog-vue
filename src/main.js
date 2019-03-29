@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import mavonEditor from 'mavon-editor'
 import router from './router'
 import store from './store'
 import iview from 'iview'
@@ -16,7 +15,6 @@ import './assets/style/reset.less'
 import 'swiper/dist/css/swiper.css'
 import 'highlight.js/styles/github.css' //样式文件
 
-Vue.use(mavonEditor)
 Vue.use(VueAwesomeSwiper)
 Vue.use(iview)
 Vue.use(VueLazyLoad)

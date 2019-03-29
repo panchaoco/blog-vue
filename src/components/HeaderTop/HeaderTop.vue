@@ -1,6 +1,6 @@
 <template>
   <div class="header-container">
-    <div class="header-top" :class="{fixed: !isApp, music: this.$route.name === 'Music'}">
+    <div class="header-top" :class="{fixed: !isApp, music: this.$route.name === 'Music', open: isOpenMenu}">
       <div class="header-wrapper">
         <div class="logo" v-if="!isApp">
           <h1>
@@ -57,13 +57,22 @@
         searchValue: ''
       }
     },
+    props: {
+      isOpenMenu: {
+        type: Boolean,
+        default: false
+      },
+      isFixed: {
+        type: Boolean,
+        default: false
+      }
+    },
     computed: {
       ...mapState({
         isApp: state => state.common.isApp
       })
     },
     created() {
-      console.log('rou', this.$route)
     },
     methods: {
       searchSubmit(e) {
@@ -78,11 +87,6 @@
         this.$emit('open-menu')
       }
     },
-    watch: {
-      $route(val) {
-        console.log('val', val)
-      }
-    }
   }
 </script>
 

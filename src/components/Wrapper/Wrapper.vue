@@ -1,14 +1,8 @@
 <template>
   <div class="app-wrapper">
-    <section class="wrapper-section">
-      <div class="main-wrapper">
-        <div class="main-content" :class="{hide: routerType === 'start'}">
-          <div class="middle-container" v-if="$slots.middle" :class="{animate: leftClick}">
-            <slot name="middle"></slot>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="middle-container" v-if="$slots.middle" :class="{animate: leftClick}">
+      <slot name="middle"></slot>
+    </div>
   </div>
 </template>
 

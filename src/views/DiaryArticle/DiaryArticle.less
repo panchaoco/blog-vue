@@ -43,9 +43,48 @@
     }
   }
 }
+.info {
+  width: 100%;
+  padding: 10px;
+  background-color: #eaeaea;
+  margin-top: 15px;
+  p {
+    height: .35rem;
+    line-height: .35rem;
+    font-size: 13px;
+    &.share {
+      display: flex;
+      align-items: center;
+    }
+  }
+  /deep/.ivu-icon, .iconfont {
+    font-size: 18px;
+    padding: 0 18px;
+    color: #949494;
+    cursor: pointer;
+    &.iconfont {
+      position: relative;
+      top: 0.5px;
+    }
+    &.ivu-icon {
+      font-size: 19px;
+    }
+  }
+}
+
+#app-mobile {
+  .info {
+    margin-top: 0;
+    p {
+      height: .55rem;
+      line-height: .55rem;
+    }
+  }
+}
+
 .render {
   background-color: #ffffff;
-  padding: 10px 15px 10px;
+  padding: 10px;
   .art-title {
     font-size: 24px;
     line-height: 30px;
@@ -99,6 +138,13 @@
     li {
       font-size: 14px;
     }
+  }
+}
+#app-mobile {
+  .render .art-title {
+    padding-bottom: .2rem;
+    font-size: .36rem;
+    font-weight: 500;
   }
 }
 

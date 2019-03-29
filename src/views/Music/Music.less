@@ -1,4 +1,5 @@
 .music-container {
+  padding: 0 .18rem;
   /deep/.main-wrapper .middle-container {
     background-color: #f9f9f9;
     box-shadow: 0 0 20px #ececec;
@@ -6,8 +7,9 @@
   .music-wrapper {
     width: 100%;
     overflow: hidden;
-    padding: 10px 10px 0;
+
     .music-slider {
+      margin-bottom: 10px;
       img {
         width: 100%;
         display: block;
@@ -21,14 +23,15 @@
           transition: all .2s;
           background-color: #ececec;
           cursor: pointer;
-          height: 0;
           overflow: hidden;
           opacity: 0;
           animation: changeHeight ease-in-out .5s forwards;
+          display: flex;
+          align-items: center;
           .song-wrapper {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: inherit;
             dl {
               display: flex;
               align-items: center;
@@ -73,48 +76,13 @@
                 padding-left: 15px;
                 h6 {
                   font-weight: normal;
+                  font-size: 12.5px;
                   .time {
                     margin-left: 20px;
                   }
                 }
                 p {
                   padding-top: 5px;
-                }
-              }
-            }
-            > .play-status {
-              display: flex;
-              width: 60px;
-              flex: 0 0 60px;
-              justify-content: center;
-              align-items: flex-end;
-              position: relative;
-              top: -10px;
-              span {
-                display: block;
-                width: 2px;
-                height: 20px;
-                background-color: #fc1d15;
-                margin-right: 2.5px;
-                &:nth-child(1) {
-                  height: 10px;
-                  animation: play1 1s linear infinite;
-                }
-                &:nth-child(2) {
-                  height: 20px;
-                  animation: play2 1s linear infinite;
-                }
-                &:nth-child(3) {
-                  height: 15px;
-                  animation: play3 1s linear infinite;
-                }
-                &:nth-child(4) {
-                  height: 18px;
-                  animation: play4 1s linear infinite;
-                }
-                &:nth-child(5) {
-                  height: 12px;
-                  animation: play5 1s linear infinite;
                 }
               }
             }
@@ -160,6 +128,15 @@
     p {
       font-size: .26rem;
     }
+    dl dt img {
+      width: .9rem;
+      height: .9rem
+    }
+  }
+  .song-list {
+    li {
+      animation-name: appHeight;
+    }
   }
 }
 
@@ -182,6 +159,19 @@
   100% {
     padding: 6px 4px;
     height: 68px;
+    opacity: 1;
+  }
+}
+
+
+@keyframes appHeight {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    padding: 6px 4px;
+    height: 1.2rem;
     opacity: 1;
   }
 }

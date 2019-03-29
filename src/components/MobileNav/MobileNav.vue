@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-nav">
     <div class="user">
-      <img width="80" src="../LeftAside/img/user.jpg" alt="">
+      <img :class="{open: isOpenMenu}" width="80" src="../LeftAside/img/user.jpg" alt="">
       <h1>ANGELBLOG-码农世界</h1>
     </div>
     <ul class="nav">
@@ -14,42 +14,18 @@
 </template>
 
 <script>
+  import leftNav from '../../nav-route'
   export default {
     name: "MobileNav",
     data() {
       return {
-        leftNav: [
-          {
-            title: '猿人世界',
-            icon: 'md-code',
-            path: '/'
-          },
-          {
-            title: '文人相轻',
-            icon: 'logo-buffer',
-            path: '/diary'
-          },
-          {
-            title: '音乐馆',
-            icon: 'md-musical-notes',
-            path: '/music'
-          },
-          {
-            title: '视频教程',
-            icon: 'md-videocam',
-            path: '/music'
-          },
-          {
-            title: '藏经阁',
-            icon: 'md-bookmarks',
-            path: '/record'
-          },
-          {
-            title: '客户端',
-            icon: 'ios-phone-portrait',
-            path: '/record'
-          },
-        ]
+        leftNav: leftNav
+      }
+    },
+    props: {
+      isOpenMenu: {
+        type: Boolean,
+        default: false
       }
     },
     methods: {
@@ -77,6 +53,7 @@
         display: block;
         width: 80px;
         height: 80px;
+        transition: transform .4s;
       }
       h1 {
         font-weight: 500;
@@ -88,12 +65,13 @@
     .nav {
       padding-left: .6rem;
       li {
-        height: .8rem;
-        line-height: .8rem;
+        height: 1rem;
+        line-height: 1rem;
         font-size: .3rem;
-        color: #1d2134;
+        color: #5f6679;
         display: flex;
         align-items: center;
+        font-weight: 500;
         /deep/.ivu-icon {
           min-width: .3rem;
         }

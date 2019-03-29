@@ -1,5 +1,5 @@
 <template>
-  <section class="record-container">
+  <BlogWrapper class="record-container">
     <div slot="middle">
       <ul class="record-content">
         <li class="record-item" v-for="(item, index) in dataSource" :key="index">
@@ -27,7 +27,7 @@
         </li>
       </ul>
     </div>
-  </section>
+  </BlogWrapper>
 </template>
 
 <script>
@@ -46,7 +46,6 @@
     },
     methods: {
       getArticle() {
-        console.log('article_type', this.$route)
         this.$store.dispatch('article/article', {
           body: {
             ordering: '-update_time'

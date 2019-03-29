@@ -1,6 +1,6 @@
 <template>
   <div class="hot-container">
-    <swiper :options="swiperOption" class="music-slider">
+    <swiper :options="swiperOption" class="music-slider" v-if="slides.length > 0">
       <swiper-slide v-for="(slide, index) in slides" :key="index">
         <a :href="slide.link" target="_blank">
           <img :src="slide.image" alt="">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="item time">
                   <Icon type="ios-time" />&nbsp;
-                  <span>{{item.update_time}}</span>
+                  <span>{{item.update_time | formatTime}}</span>
                 </div>
               </div>
             </div>
@@ -37,6 +37,7 @@
         </li>
       </ul>
     </div>
+    <!--<blog-footer></blog-footer>-->
   </div>
 </template>
 
@@ -47,7 +48,21 @@
     data() {
       return {
         hots: [],
-        slides: []
+        slides: [],
+        swiperOption: {
+          slidesPerView: 1,
+          spaceBetween: 30,
+          // effect: 'fade',
+          loop: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false
+          },
+        },
       }
     },
     computed: {
@@ -74,7 +89,6 @@
         })
       },
       getArticle() {
-        console.log('this.$route', this.$route.name)
         const article_type = this.$route.name !== 'Diary' ? 1 : 2
         this.$store.dispatch('article/article', {
           body: {
@@ -86,22 +100,19 @@
       },
       articleDetail(item) {
         const type = Number(this.$route.query.id)
-        console.log('type', type)
-        if (type === 1) {
-          this.updateLeftClick(false)
-          this.$router.push({
-            path: `/diary/article/${item.id}`,
-            query: {
-              id: -1
-            }
-          })
-          return
-        }
+        this.updateLeftClick(false)
         this.$router.push({
-          path: `/article/${item.id}`,
+          path: `/diary/article/${item.id}`,
         })
       }
     },
+    filters: {
+      formatTime(time) {
+        return time.split(/\s+/)[0]
+      }
+    },
+    components: {
+    }
   }
 </script>
 

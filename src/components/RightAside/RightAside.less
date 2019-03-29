@@ -67,6 +67,12 @@
             margin-right: 8px;
             font-size: 12px;
           }
+          .title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 180px;
+          }
         }
         &:nth-child(1) {
           .content {
@@ -129,17 +135,15 @@
   margin-top: 15px;
   span {
     display: inline-block;
-    padding: 4px 13px;
+    padding: 4.5px 20px;
     margin-right: 10px;
-    font-size: 12.5px;
+    font-size: 12px;
     background-color: #eaeaea;
     margin-bottom: 8px;
-    &:nth-child(5n) {
-      background-color: rgba(50, 239, 199, 0.95);
-    }
-    &:nth-child(4n) {
-      background-color: #ff7976;
-      color: #fff;
+    transition: background-color .2s;
+    cursor: pointer;
+    &:hover {
+      background-color: #aeaeae;
     }
   }
 }

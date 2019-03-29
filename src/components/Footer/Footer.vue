@@ -22,6 +22,8 @@
 
 <style lang="less" scoped>
   .footer {
+    padding: .3rem 0 0;
+    font-size: 13px;
     .footer-container {
       width: 100%;
       display: flex;
@@ -30,7 +32,6 @@
       padding-bottom: 15px;
       bottom: 0;
       flex-direction: column;
-      background-color: #f7f7f7;
       z-index: 100;
       .record {
         span {
@@ -43,6 +44,12 @@
           margin-right: 10px;
         }
       }
+    }
+  }
+  #app-mobile {
+    .footer {
+      background-color: #fff;
+      font-size: .26rem;
     }
   }
 </style>

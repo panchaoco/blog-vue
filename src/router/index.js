@@ -8,12 +8,18 @@ const Player = () => import('../views/Player/Player')
 const Search = () => import('../views/Search/Search')
 const Record = () => import('../views/Record/Record')
 const DiaryArticle = () => import('../views/DiaryArticle/DiaryArticle')
+const BlogUser = () => import('../views/BlogUser/BlogUser')
 
 Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
   routes: [
+    {
+      path:'*',redirect:{
+      name: 'Home',
+    }
+    },
     {
       path: '/',
       name: 'Home',
@@ -58,7 +64,12 @@ const router = new Router({
       path: '/diary/article/:id',
       name: 'DiaryArticle',
       component: DiaryArticle
-    }
+    },
+    {
+      path: '/blogUser',
+      name: 'BlogUser',
+      component: BlogUser
+    },
   ]
 })
 

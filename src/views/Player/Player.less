@@ -1,10 +1,14 @@
 .music-play-container {
   width: 100%;
   height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   z-index: 100;
   transition: all .8s;
   display: flex;
-  position: relative;
   background-color: rgba(0,0,0,.35);
   .music-pic-wrapper {
     flex: 1;
@@ -27,6 +31,7 @@
         overflow: hidden;
         transition: all .4s;
         color: #fff;
+        min-width: 1024px;
         margin-top: 80px;
         margin-left: 80px;
         .top {

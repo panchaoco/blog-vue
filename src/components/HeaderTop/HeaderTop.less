@@ -87,6 +87,13 @@
       height: 1.8rem;
       background-color: #0088f5;
       box-shadow: none;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 999;
+      &.open {
+        position: relative;
+      }
       &.music {
         background-color: #31c27c;
         .search-input {

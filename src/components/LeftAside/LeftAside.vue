@@ -13,7 +13,9 @@
       </li>
     </ul>
     <div class="blog-user" v-if="info">
-      <img class="user-img" width="100" height="" src="./img/user.jpg" alt="">
+      <a href="./img/user.jpg" download>
+        <img class="user-img" width="100" height="" src="./img/user.jpg" alt="">
+      </a>
       <div class="info ">
         <span class="username">代码快枪手</span>
       </div>
@@ -42,42 +44,12 @@
 
 <script>
   import {mapMutations} from 'vuex'
+  import leftNav from '../../nav-route'
   export default {
     name: "LeftAside",
     data() {
       return {
-        leftNav: [
-          {
-            title: '猿人世界',
-            icon: 'md-code',
-            path: '/'
-          },
-          {
-            title: '随记',
-            icon: 'logo-buffer',
-            path: '/diary'
-          },
-          {
-            title: '音乐馆',
-            icon: 'md-musical-notes',
-            path: '/music'
-          },
-          {
-            title: '视频教程',
-            icon: 'md-videocam',
-            path: '/music'
-          },
-          {
-            title: '藏经阁',
-            icon: 'md-bookmarks',
-            path: '/record'
-          },
-          {
-            title: '客户端',
-            icon: 'ios-phone-portrait',
-            path: '/record'
-          },
-        ],
+        leftNav: leftNav,
         current: 0,
         route: '',
         isLoad: false,
@@ -85,9 +57,8 @@
       }
     },
     created() {
-      if (this.$route.query['id']) {
-        this.current = Number(this.$route.query['id'])
-      }
+      console.log('this.$route.path', this.$route.path)
+      this.current = this.leftNav.findIndex(item => item.path === window.location.pathname)
       this.getBlogInfo()
     },
     mounted() {
@@ -119,6 +90,9 @@
       }
     },
     watch: {
+      $route(val) {
+        this.current = this.leftNav.findIndex(item => item.path === window.location.pathname)
+      }
     }
   }
 </script>

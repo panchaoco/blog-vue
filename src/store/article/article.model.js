@@ -23,10 +23,8 @@ export default {
       return res
     },
     async ['article/getComment']({commit, state}, payload) {
-      const res = await Axios('/v1/api/comment/', {
-        method: 'GET',
-        body: payload
-      })
+      const res = await Axios('/v1/api/comment/', payload)
+      console.log('payload', payload)
       return res
     },
     async ['article/addComment']({commit, state}, payload) {

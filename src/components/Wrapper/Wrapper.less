@@ -4,35 +4,18 @@
 
 .app-wrapper {
   flex: 1;
-  margin-left: 200px;
 }
 @media screen and (max-width: 1089px) {
   .app-wrapper {
     margin-left: 0;
   }
 }
-.main-wrapper {
-  flex: 1;
-  display: flex;
-  .content-wrapper {
-    flex: 1;
-    display: flex;
-  }
-  .main-content {
-    flex: 1;
-    display: flex;
-
-    overflow: hidden;
-  }
-  .middle-container {
-    width: 0;
-    flex: 1;
-    &.animate {
-      animation: main .5s ease-in-out forwards;
-    }
+.middle-container {
+  width: 100%;
+  &.animate {
+    animation: main .5s ease-in-out forwards;
   }
 }
-
 @keyframes main {
   0% {
     transform: translate3d(-300px, 0, 0) scale3d(.4, 1, .4);
@@ -62,6 +45,7 @@
 
 #app-mobile {
   .app-wrapper {
-    margin: 0 0.18rem;
+    margin: 0;
+    //padding: 0 0.18rem;
   }
 }

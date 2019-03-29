@@ -47,7 +47,6 @@ export default {
       }
       str = str.substring(0, str.length - 1)
       const headerPath = `${path}${str}`
-      payload[':path'] = headerPath
       const res = await Axios('/v1/api/get_music_play_url/', {
         method: 'GET',
         body: payload,

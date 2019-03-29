@@ -1,28 +1,28 @@
 <template>
   <div class="aside-recommend">
-    <div class="hot" v-for="(item, index) in asideHot" :key="index">
+    <div class="hot">
       <h4>
         <Icon type="md-flame"/>
-        {{item.title}}
+        {{asideHot.title}}
       </h4>
-      <ul>
-        <li v-for="(sub_item, sub_index) in item.list"
+      <ul v-if="asideHot.list.length > 0">
+        <li v-for="(sub_item, sub_index) in asideHot.list"
             :key="sub_item.title"
             :style="{transition: `all 300ms ease-in-out ${sub_index * 120}ms`}"
             ref="lis">
           <p class="content">
             <span class="rank">{{sub_index + 1}}</span>
-            <span>{{sub_item.title}}</span>
+            <span class="title" :title="sub_item.title">{{sub_item.title}}</span>
           </p>
         </li>
       </ul>
     </div>
 
-    <div class="curr-time">
-      <span>{{times.hours}}</span><em>:</em>
-      <span>{{times.minutes}}</span><em>:</em>
-      <span>{{times.seconds}}</span>
-    </div>
+    <!--<div class="curr-time">-->
+      <!--<span>{{times.hours}}</span><em>:</em>-->
+      <!--<span>{{times.minutes}}</span><em>:</em>-->
+      <!--<span>{{times.seconds}}</span>-->
+    <!--</div>-->
     <div class="category">
       <div class="cate-content">
         <span v-for="item in categoryData" :key="item.id">{{item.name}}</span>
@@ -36,53 +36,11 @@
     name: "RightAside",
     data() {
       return {
-        asideHot: [
-          {
-            title: '热门咨询',
-            list: [
-              {
-                title: '浏览器的渲染机制',
-                className: ''
-              },
-              {
-                title: '从零搭建Vue项目',
-                className: ''
-              },
-              {
-                title: 'Vue源码解析',
-                className: ''
-              },
-              {
-                title: 'React源码解析',
-                className: ''
-              },
-              {
-                title: '如何开发自己的webpack插件',
-                className: ''
-              },
-              {
-                title: 'scrapy爬虫',
-                className: ''
-              },
-              {
-                title: 'Django开发API',
-                className: ''
-              },
-              {
-                title: 'Django rest framework',
-                className: ''
-              },
-              {
-                title: 'Go',
-                className: ''
-              },
-              {
-                title: 'Go 框架之Beego',
-                className: ''
-              },
-            ]
-          },
-        ],
+        asideHot: {
+          title: '热门浏览',
+          list: [
+          ]
+        },
         times: {
           hours: '',
           minutes: '',
@@ -97,12 +55,13 @@
       this.timer = window.setInterval(() => {
         this.getCurrentTime()
       }, 1000)
+      this.getArticle()
     },
     mounted() {
       setTimeout(() => {
-        Array.from(this.$refs.lis).forEach(item => {
-          item.className = 'active'
-        })
+        // Array.from(this.$refs.lis).forEach(item => {
+        //   item.className = 'active'
+        // })
       }, 20)
     },
     methods: {
@@ -121,6 +80,16 @@
       getCategory() {
         this.$store.dispatch('article/category').then(res => {
           this.categoryData = res.data
+        })
+      },
+      getArticle() {
+        this.$store.dispatch('article/article', {
+          method: 'GET',
+          body: {
+            ordering: '-look_count'
+          }
+        }).then(res => {
+          this.$set(this.asideHot, 'list', res.data)
         })
       }
     }

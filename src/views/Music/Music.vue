@@ -1,7 +1,7 @@
 <template>
   <section class="music-container">
     <blog-wrapper>
-      <blog-left-aside slot="left" />
+      <blog-left-aside slot="left"/>
       <div class="music-wrapper" slot="middle">
         <swiper :options="swiperOption" class="music-slider">
           <swiper-slide v-for="(slide, index) in slides" :key="index">
@@ -15,41 +15,34 @@
         </swiper>
         <div class="content">
           <ul class="song-list">
-            <li v-for="(item, index) in musicList" :key="index">
-              <div class="song-wrapper"><dl>
-                <dt @click="playMusic(item, index)">
-                  <img :src="item.img_src" alt="">
-                  <span class="mask">
+            <li v-for="(item, index) in musicList" :key="index" @click="playMusic(item, index)">
+              <div class="song-wrapper">
+                <dl>
+                  <dt>
+                    <img :src="item.img_src" alt="">
+                    <span class="mask">
                     <Icon type="md-play" v-if="!item.play"/>
-                    <Icon type="md-pause" v-else />
+                    <Icon type="md-pause" v-else/>
                   </span>
-                </dt>
-                <dd>
-                  <h6>
-                    <span>{{item.data.songname}}</span>
-                    -
-                    <span class="single" v-for="(s_item, i) in item.data.singer" :key="s_item.id">
+                  </dt>
+                  <dd>
+                    <h6>
+                      <span>{{item.data.songname}}</span>
+                      -
+                      <span class="single" v-for="(s_item, i) in item.data.singer" :key="s_item.id">
                       {{s_item.name}}
                       {{i !== item.data.singer.length - 1 ? '-' : ''}}
                     </span>
-                  </h6>
-                  <p>{{item.data.albumdesc}}</p>
-                </dd>
-              </dl>
-                <div class="play-status" v-if="current === index && play">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-
+                    </h6>
+                    <p>{{item.data.albumdesc}}</p>
+                  </dd>
+                </dl>
               </div>
               <!--<div class="comment">-->
-                <!--<p>评论区</p>-->
-                <!--<ul>-->
-                  <!--<li></li>-->
-                <!--</ul>-->
+              <!--<p>评论区</p>-->
+              <!--<ul>-->
+              <!--<li></li>-->
+              <!--</ul>-->
               <!--</div>-->
             </li>
           </ul>
@@ -59,7 +52,6 @@
         </div>
       </div>
     </blog-wrapper>
-    <!--<blog-footer></blog-footer>-->
   </section>
 </template>
 
@@ -74,6 +66,9 @@
   import getGuid from '../../utils/music/guid'
   import musicKey from '../../utils/music/music_key'
   import BlogFooter from '../../components/Footer/Footer'
+
+  import Scroll from '../../components/Scroll/Scroll'
+
   export default {
     name: "Music",
     data() {
@@ -92,12 +87,21 @@
             disableOnInteraction: false
           },
         },
+        scrollOption: {
+          direction: 'vertical',
+          slidesPerView: 'auto',
+          freeMode: true,
+          scrollbar: {
+            el: '.swiper-scrollbar'
+          },
+          mousewheel: true
+        },
         slides: [],
-        musicList: [
-        ],
+        musicList: [],
         songBegin: 0,
         songNum: 10,
-        isOpen: false
+        isOpen: false,
+        scroll: null
       }
     },
     computed: {
@@ -114,8 +118,7 @@
     mounted() {
       window.addEventListener('storage', (e) => {
         if (e.key === 'isOpen') {
-          const isOpen = e.newValue === '1'
-          this.isOpen = isOpen
+          this.isOpen =  (e.newValue === '1')
         }
       }, false)
     },
@@ -184,12 +187,15 @@
         }
       },
     },
+    watch: {
+
+    },
     components: {
       BlogLeftAside,
       BlogWrapper,
       BlogHeaderTop,
-      BlogFooter
-
+      BlogFooter,
+      Scroll
     }
   }
 </script>

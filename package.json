@@ -7,20 +7,24 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "skeleton": "node skeleton.js",
+    "skeletonJson": "webpack --config build/webpack.skeleton.conf.js"
   },
   "dependencies": {
     "auto-textarea": "^1.4.0",
     "axios": "^0.18.0",
+    "better-scroll": "^1.15.0",
     "highlight.js": "^9.13.1",
     "iview": "^3.2.2",
     "markdown-it": "^8.4.2",
     "mavon-editor": "^2.6.17",
     "nprogress": "^0.2.0",
-    "vue": "^2.5.2",
+    "vue": "2.6.10",
     "vue-awesome-swiper": "^3.1.3",
     "vue-lazyload": "^1.2.6",
     "vue-router": "^3.0.1",
+    "vue-skeleton-webpack-plugin": "^1.2.2",
     "vuex": "^3.1.0"
   },
   "devDependencies": {
@@ -56,12 +60,14 @@
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-loader": "^13.3.0",
+    "vue-server-renderer": "2.6.10",
     "vue-style-loader": "^3.0.1",
-    "vue-template-compiler": "^2.5.2",
+    "vue-template-compiler": "2.6.10",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "webpack-node-externals": "^1.7.2"
   },
   "engines": {
     "node": ">= 6.0.0",
